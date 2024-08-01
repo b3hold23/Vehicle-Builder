@@ -4,19 +4,18 @@ import Truck from "./Truck.js";
 import Car from "./Car.js";
 import Motorbike from "./Motorbike.js";
 import Wheel from "./Wheel.js";
-import { parse } from "path";
 
 // define the Cli class
 class Cli {
   // TODO: update the vehicles property to accept Truck and Motorbike objects as well
   // TODO: You will need to use the Union operator to define additional types for the array
   // TODO: See the AbleToTow interface for an example of how to use the Union operator
-  vehicles: (Car | Truck | Motorbike)[];
+  vehicles: (Car)[];
   selectedVehicleVin: string | undefined;
   exit: boolean = false;
 
   // TODO: Update the constructor to accept Truck and Motorbike objects as well
-  constructor(vehicles: (Car | Truck | Motorbike)[]) {
+  constructor(vehicles: (Car)[]) {
     this.vehicles = vehicles;
   }
 
@@ -62,17 +61,13 @@ class Cli {
           name: 'vehicleType',
           message: 'Select a vehicle type',
           // TODO: Update the choices array to include Truck and Motorbike
-          choices: ['Car', 'Truck', 'Motorbike'],
+          choices: ['Car'],
         },
       ])
       .then((answers) => {
         if (answers.vehicleType === 'Car') {
           // create a car
           this.createCar();
-        } else if (answers.vehicleType === 'Truck') {
-          this.createTruck();
-        } else if (answers.vehicleType === 'Motorbike') {
-          this.createMotorbike();
         }
         // TODO: add statements to create a truck or motorbike if the user selects the respective vehicle type
       });
@@ -173,40 +168,13 @@ class Cli {
           name: 'towingCapacity',
           message: 'Enter Towing Capacity',
         },
-        {
-          type: 'checkbox',
-          name: 'wheels',
-          message: 'Select Wheels',
-          choices:[
-            { name: '17" Michelin', value: '17' },
-            { name: '18" Michelin', value: '18' },
-            { name: '19" Michelin', value: '19' },
-          ],
-        },
       ])
       .then((answers) => {
-        const wheels: Wheel[] = answers.wheels.map((wheelSize) => {
-          return new Wheel(parseInt(wheelSize));
-        });
-        const truck = new Truck(
-          // TODO: The generateVin method is static and should be called using the class name Cli, make sure to use Cli.generateVin() for creating a truck and motorbike as well!
-          Cli.generateVin(),
-          answers.color,
-          answers.make,
-          answers.model,
-          parseInt(answers.year),
-          parseInt(answers.weight),
-          parseInt(answers.topSpeed),
-          parseInt(answers.towingCapacity),
-          wheels,
-        );
-        // push the truck to the vehicles array
-        this.vehicles.push(truck);
-        // set the selectedVehicleVin to the vin of the truck
-        this.selectedVehicleVin = truck.vin;
-        // perform actions on the truck
-        this.performActions();
-        })
+        // TODO: Use the answers object to pass the required properties to the Truck constructor
+        // TODO: push the truck to the vehicles array
+        // TODO: set the selectedVehicleVin to the vin of the truck
+        // TODO: perform actions on the truck
+      });
   }
 
   // method to create a motorbike
