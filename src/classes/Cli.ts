@@ -180,8 +180,9 @@ class Cli {
           parseInt(answers.year),
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
+          [],
           parseInt(answers.towingCapacity)
-        );
+        )
         this.vehicles.push(truck);
         this.selectedVehicleVin = truck.vin;
         this.performActions();
@@ -252,8 +253,7 @@ class Cli {
           parseInt(answers.year),
           parseInt(answers.weight),
           parseInt(answers.topSpeed),
-          new Wheel(parseInt(answers.frontWheelDiameter), answers.frontWheelBrand),
-          new Wheel(parseInt(answers.rearWheelDiameter), answers.rearWheelBrand)
+          [new Wheel(parseInt(answers.frontWheelDiameter), answers.frontWheelBrand), new Wheel(parseInt(answers.rearWheelDiameter), answers.rearWheelBrand)]
         );
         this.vehicles.push(motorbike);
         this.selectedVehicleVin = motorbike.vin;
@@ -283,8 +283,11 @@ class Cli {
         if (vehicleToTow === truck) {
           console.log('The truck cannot tow itself');
           this.performActions();
-        } else {
+        } else if (vehicleToTow) {
           truck.tow(vehicleToTow);
+          this.performActions();
+        } else {
+          console.log('Vehicle to tow was not found');
           this.performActions();
         }
       });
