@@ -5,16 +5,23 @@ import Car from "./Car.js";
 import Motorbike from "./Motorbike.js";
 import Wheel from "./Wheel.js";
 import Vehicle from "./Vehicle.js";
+import AbleToTow from "../interfaces/AbleToTow.js";
 
 // define the Cli class
-class Cli {
+class Cli extends Vehicle implements AbleToTow{
   vehicles: (Car | Truck | Motorbike)[];
   selectedVehicleVin: string | undefined;
   exit: boolean = false;
 
   // TODO: Update the constructor to accept Truck and Motorbike objects as well
   constructor(vehicles: (Car | Truck | Motorbike)[]) {
+    super();
     this.vehicles = vehicles;
+  }
+  towingCapacity!: number;
+  weight!: number;
+  tow(vehicle: Car | Truck | Motorbike): void {
+    throw new Error("Method not implemented.");
   }
 
   // static method to generate a vin
